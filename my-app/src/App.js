@@ -17,13 +17,12 @@ function App() {
         >
           This is my App!! and here is a link...maybe!
         </a>
-        <a
-        >
-          My name is Pedro and here there is no link!
-        </a>
         <p>
-          Testing 123
-        </p>
+          My name is Pedro and here there is no link!
+        </p>        >
+        <p>
+          here is what i did on March 14
+        </p>    
       </header>
     </div>
   );
