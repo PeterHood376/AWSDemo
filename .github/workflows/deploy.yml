@@ -1,0 +1,41 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs: 
+  frontend:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+          registry-url: https://npm.pkg.github.com/
+          scope: "@procter-gamble"
+
+      - name: "NPM Install Frontend"
+        working-directory: my-app
+        run: npm install --only=prod
+
+      - name: "NPM run Build"
+        working-directory: my-app
+        run: npm run build
+
+      - name: "Deploy Frontend"
+        working-directory: my-app
+        run: npm run deploy
+
+      - name: "Post Deploy Frontend"
+        working-directory: my-app
+        run: npm run postdeploy
